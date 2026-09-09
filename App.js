@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StatusBar, StyleSheet } from 'react-native';
+import { StatusBar, StyleSheet } from 'react-native';
+import {
+  SafeAreaProvider,
+  SafeAreaView,
+} from 'react-native-safe-area-context';
 
 import Login from './src/pages/Login';
 import AlumnoPage from './src/pages/AlumnoPage';
@@ -15,53 +19,57 @@ export default function App() {
     setPage(usuarioEncontrado.rol);
   };
 
+  let content;
+
   switch (page) {
     case 'alumno':
-      return (
-        <SafeAreaView style={styles.container}>
-          <StatusBar barStyle="dark-content" backgroundColor="#F8FAFC" />
-          <AlumnoPage
-            usuario={usuario}
-            setPage={setPage}
-          />
-        </SafeAreaView>
+      content = (
+        <AlumnoPage
+          usuario={usuario}
+          setPage={setPage}
+        />
       );
+      break;
 
     case 'profesor':
-      return (
-        <SafeAreaView style={styles.container}>
-          <StatusBar barStyle="dark-content" backgroundColor="#F8FAFC" />
-          <ProfesorPage
-            usuario={usuario}
-            setPage={setPage}
-          />
-        </SafeAreaView>
+      content = (
+        <ProfesorPage
+          usuario={usuario}
+          setPage={setPage}
+        />
       );
+      break;
 
     case 'padre':
-      return (
-        <SafeAreaView style={styles.container}>
-          <StatusBar barStyle="dark-content" backgroundColor="#F8FAFC" />
-          <PadrePage
-            usuario={usuario}
-            setPage={setPage}
-          />
-        </SafeAreaView>
+      content = (
+        <PadrePage
+          usuario={usuario}
+          setPage={setPage}
+        />
       );
+      break;
 
     default:
-      return (
-        <SafeAreaView style={styles.container}>
-          <StatusBar barStyle="dark-content" backgroundColor="#F8FAFC" />
-          <Login onLogin={handleLogin} />
-        </SafeAreaView>
-      );
+      content = <Login onLogin={handleLogin} />;
   }
+
+  return (
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container}>
+        <StatusBar
+          barStyle="dark-content"
+          backgroundColor="#F8FAFC"
+        />
+
+        {content}
+      </SafeAreaView>
+    </SafeAreaProvider>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8FAFC', // Fondo claro institucional de la paleta
+    backgroundColor: '#F8FAFC',
   },
 });
