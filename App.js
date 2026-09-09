@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StatusBar, StyleSheet, View } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 import Login from './src/pages/Login';
 import AlumnoPage from './src/pages/AlumnoPage';
@@ -52,7 +52,7 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container} edges={['bottom', 'left', 'right']}>
         <StatusBar
           barStyle="light-content"
           backgroundColor="transparent"
@@ -60,7 +60,7 @@ export default function App() {
         />
 
         {content}
-      </View>
+      </SafeAreaView>
     </SafeAreaProvider>
   );
 }
