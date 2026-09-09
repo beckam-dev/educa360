@@ -59,7 +59,7 @@ export default function AlumnoPage({ usuario, setPage }) {
           <View style={styles.greetingRow}>
             <View>
               <Text style={styles.greetingText}>
-                Hola, {alumnoData.nombre.split(' ')[0]} 👋
+                Hola, {alumnoData.nombre.split(' ')[0]}!
               </Text>
               <Text style={styles.bannerSubtitle}>
                 Panel académico del estudiante
@@ -175,9 +175,8 @@ export default function AlumnoPage({ usuario, setPage }) {
           </>
         )}
 
-        {/* ======================================================== */}
         {/* PESTAÑA 2: CURSOS CON DISEÑO PRO                         */}
-        {/* ======================================================== */}
+
         {activeTab === 'cursos' && (
           <View style={styles.section}>
             <View style={styles.sectionHeaderRow}>
@@ -241,9 +240,8 @@ export default function AlumnoPage({ usuario, setPage }) {
           </View>
         )}
 
-        {/* ======================================================== */}
         {/* PESTAÑA 3: NOTAS / CALIFICACIONES                        */}
-        {/* ======================================================== */}
+   
         {activeTab === 'notas' && (
           <View style={styles.section}>
             <View style={styles.sectionHeaderRow}>
@@ -267,9 +265,8 @@ export default function AlumnoPage({ usuario, setPage }) {
           </View>
         )}
 
-        {/* ======================================================== */}
         {/* PESTAÑA 4: PERFIL DEL ALUMNO + INFO + LOGOUT             */}
-        {/* ======================================================== */}
+
         {activeTab === 'perfil' && (
           <View style={styles.section}>
             {/* Foto / Avatar del Alumno */}

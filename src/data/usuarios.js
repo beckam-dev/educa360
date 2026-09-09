@@ -1,8 +1,7 @@
 export const usuarios = [
   {
     id: 1,
-    usuario: 'juan',
-    email: 'juan.perez@educa360.pe',
+    email: 'juan@educa360.com',
     password: '1234',
     rol: 'alumno',
     personaId: 101,
@@ -10,8 +9,7 @@ export const usuarios = [
   },
   {
     id: 2,
-    usuario: 'maria',
-    email: 'maria.lopez@educa360.pe',
+    email: 'maria@educa360.com',
     password: '1234',
     rol: 'profesor',
     personaId: 201,
@@ -19,8 +17,7 @@ export const usuarios = [
   },
   {
     id: 3,
-    usuario: 'carlos',
-    email: 'carlos.perez@educa360.pe',
+    email: 'carlos@educa360.com',
     password: '1234',
     rol: 'padre',
     personaId: 301,

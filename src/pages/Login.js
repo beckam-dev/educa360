@@ -27,11 +27,9 @@ export default function Login({ onLogin }) {
 
     if (field === 'usuario') {
       if (!value.trim()) {
-        errorMsg = 'El usuario institucional es obligatorio.';
-      } else if (value.trim().length < 3) {
-        errorMsg = 'El usuario debe contener al menos 3 caracteres.';
-      } else if (/\s/.test(value)) {
-        errorMsg = 'El usuario no debe contener espacios en blanco.';
+        errorMsg = 'El correo institucional es obligatorio.';
+      } else if (!value.includes('@') || !value.includes('.')) {
+        errorMsg = 'Ingresa un correo electrónico válido.';
       }
     }
 
@@ -56,10 +54,10 @@ export default function Login({ onLogin }) {
       return;
     }
 
-    // Comprobación contra src/data/usuarios.js
+    // CORRECCIÓN CLAVE: Buscar contra u.email en lugar de u.usuario
     const usuarioEncontrado = usuarios.find(
       (u) =>
-        u.usuario.toLowerCase() === usuario.trim().toLowerCase() &&
+        u.email.toLowerCase() === usuario.trim().toLowerCase() &&
         u.password === password
     );
 
@@ -68,9 +66,8 @@ export default function Login({ onLogin }) {
       onLogin(usuarioEncontrado); // Redirige a la pantalla del rol correspondiente en App.js
     } else {
       Alert.alert(
-        'Credenciales Incorrectas',
-        'El usuario o la contraseña ingresados no coinciden con nuestros registros.\n\nUsuarios válidos:\n• juan (Alumno)\n• maria (Profesor)\n• carlos (Padre)\nClave: 1234',
-        [{ text: 'Entendido', style: 'default' }]
+        'Acceso Denegado',
+        'El correo o la contraseña ingresados son incorrectos. Verifica tus datos e intenta nuevamente.'
       );
     }
   };
@@ -100,14 +97,14 @@ export default function Login({ onLogin }) {
 
         {/* Tarjeta del Formulario */}
         <View style={styles.card}>
-          <Text style={styles.inputLabel}>Usuario Institucional</Text>
+          <Text style={styles.inputLabel}>Correo Institucional</Text>
           <TextInput
             style={[
               styles.input,
               isUserFocused && styles.inputFocused,
               errors.usuario && styles.inputError,
             ]}
-            placeholder="juan, maria o carlos"
+            placeholder="ej. nombre@educa360.com"
             placeholderTextColor="#94A3B8"
             value={usuario}
             onChangeText={(text) => {
@@ -121,6 +118,7 @@ export default function Login({ onLogin }) {
             }}
             autoCapitalize="none"
             autoCorrect={false}
+            keyboardType="email-address"
           />
           {errors.usuario && (
             <Text style={styles.errorText}>{errors.usuario}</Text>
@@ -161,8 +159,8 @@ export default function Login({ onLogin }) {
             style={styles.helpButton}
             onPress={() =>
               Alert.alert(
-                'Cuentas Demo',
-                'Roles registrados en el sistema:\n• juan (Alumno)\n• maria (Profesor)\n• carlos (Padre)\nClave para todos: 1234'
+                'Recuperación de Acceso',
+                'Comunícate con el área de soporte tecnológico de la institución para restablecer tu contraseña.'
               )
             }
           >
