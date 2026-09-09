@@ -3,7 +3,7 @@ import { StyleSheet, Platform } from 'react-native';
 export const styles = StyleSheet.create({
   floatingWrapper: {
     position: 'absolute',
-    bottom: Platform.OS === 'ios' ? 24 : 16,
+    bottom: Platform.OS === 'ios' ? 24 : 12, // Se adapta dinámicamente según el sistema
     left: 0,
     right: 0,
     alignItems: 'center',
@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-    backgroundColor: '#FFFFFF', // Cuadro flotante claro
+    backgroundColor: '#FFFFFF',
     paddingVertical: 10,
     paddingHorizontal: 14,
     borderRadius: 22,
@@ -33,7 +33,6 @@ export const styles = StyleSheet.create({
       },
     }),
   },
-  // Contorno fino con degradado cósmico para el activo
   activeBorder: {
     flex: 1,
     maxWidth: 90,
@@ -41,7 +40,6 @@ export const styles = StyleSheet.create({
     borderRadius: 16,
     marginHorizontal: 4,
   },
-  // Núcleo del botón activo con morado claro/lavanda (#F3E8FF)
   activeInner: {
     backgroundColor: '#F3E8FF',
     paddingVertical: 10,
@@ -53,9 +51,8 @@ export const styles = StyleSheet.create({
   activeLabel: {
     fontSize: 11,
     fontWeight: '700',
-    color: '#5F348F', // Morado escolar visible
+    color: '#5F348F',
   },
-  // Botones inactivos planos
   inactiveTab: {
     flex: 1,
     maxWidth: 90,

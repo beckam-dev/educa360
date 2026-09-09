@@ -2,9 +2,14 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
+import PropTypes from 'prop-types';
 import { styles } from './GradientButtonGroup.styles';
 
-export default function GradientButtonGroup({ tabs, activeTab, onSelectTab }) {
+export default function GradientButtonGroup({ 
+  tabs = [], 
+  activeTab = 'inicio', 
+  onSelectTab = () => {} 
+}) {
   return (
     <View style={styles.floatingWrapper} pointerEvents="box-none">
       <View style={styles.dockBar}>
@@ -48,3 +53,9 @@ export default function GradientButtonGroup({ tabs, activeTab, onSelectTab }) {
     </View>
   );
 }
+
+GradientButtonGroup.propTypes = {
+  tabs: PropTypes.array.isRequired,
+  activeTab: PropTypes.string.isRequired,
+  onSelectTab: PropTypes.func.isRequired,
+};

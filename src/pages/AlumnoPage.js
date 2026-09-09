@@ -6,6 +6,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import PropTypes from 'prop-types';
 import { LinearGradient } from 'expo-linear-gradient';
 import GradientButtonGroup from '../components/ui/GradientButtonGroup';
 import { styles } from '../styles/Alumno.styles';
@@ -355,5 +356,17 @@ export default function AlumnoPage({ usuario, setPage }) {
         onSelectTab={setActiveTab}
       />
     </View>
+
+    
   );
 }
+AlumnoPage.propTypes = {
+  usuario: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    email: PropTypes.string.isRequired,
+    rol: PropTypes.string.isRequired,
+    personaId: PropTypes.number.isRequired,
+    nombre: PropTypes.string.isRequired,
+  }).isRequired,
+  setPage: PropTypes.func.isRequired,
+};

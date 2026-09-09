@@ -10,34 +10,35 @@ import {
   Image,
   Alert,
 } from 'react-native';
+import PropTypes from 'prop-types';
 import CosmicButton from '../components/ui/CosmicButton';
 import { styles } from '../styles/Login.styles';
 import { usuarios } from '../data/usuarios';
 
-export default function Login({ onLogin }) {
+export default function Login({ onLogin = () => {} }) {
   const [usuario, setUsuario] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
   const [isUserFocused, setIsUserFocused] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
-  // Validación individual por campo
+  // Validación individual estricta por campo
   const validateField = (field, value) => {
     let errorMsg = null;
 
     if (field === 'usuario') {
       if (!value.trim()) {
         errorMsg = 'El correo institucional es obligatorio.';
-      } else if (!value.includes('@') || !value.includes('.')) {
-        errorMsg = 'Ingresa un correo electrónico válido.';
+      } else if (!value.trim().endsWith('@educa360.com') && !value.trim().endsWith('@educa360.pe')) {
+        errorMsg = 'El correo debe pertenecer al dominio @educa360.com';
       }
     }
 
     if (field === 'password') {
       if (!value) {
-        errorMsg = 'La contraseña institucional es obligatoria.';
+        errorMsg = 'Falta ingresar la contraseña.';
       } else if (value.length < 4) {
-        errorMsg = 'La contraseña debe tener un mínimo de 4 caracteres.';
+        errorMsg = 'La contraseña debe tener al menos 4 caracteres.';
       }
     }
 
@@ -46,7 +47,6 @@ export default function Login({ onLogin }) {
   };
 
   const handleLogin = () => {
-    // Validar ambos campos antes de procesar
     const userError = validateField('usuario', usuario);
     const passError = validateField('password', password);
 
@@ -54,16 +54,18 @@ export default function Login({ onLogin }) {
       return;
     }
 
-    // CORRECCIÓN CLAVE: Buscar contra u.email en lugar de u.usuario
+    const inputClean = usuario.trim().toLowerCase();
+    const passClean = password.trim();
+
     const usuarioEncontrado = usuarios.find(
       (u) =>
-        u.email.toLowerCase() === usuario.trim().toLowerCase() &&
-        u.password === password
+        u.email.trim().toLowerCase() === inputClean &&
+        u.password.trim() === passClean
     );
 
     if (usuarioEncontrado) {
       setErrors({});
-      onLogin(usuarioEncontrado); // Redirige a la pantalla del rol correspondiente en App.js
+      onLogin(usuarioEncontrado);
     } else {
       Alert.alert(
         'Acceso Denegado',
@@ -79,11 +81,9 @@ export default function Login({ onLogin }) {
     >
       <StatusBar barStyle="dark-content" backgroundColor="#F8FAFC" />
 
-      {/* Resplandor sutil superior */}
       <View style={styles.ambientGlow} />
 
       <View style={styles.content}>
-        {/* Cabecera: Logo transparente y subtítulo */}
         <View style={styles.header}>
           <Image
             source={require('../../assets/logo.png')}
@@ -95,14 +95,13 @@ export default function Login({ onLogin }) {
           </Text>
         </View>
 
-        {/* Tarjeta del Formulario */}
         <View style={styles.card}>
           <Text style={styles.inputLabel}>Correo Institucional</Text>
           <TextInput
             style={[
               styles.input,
               isUserFocused && styles.inputFocused,
-              errors.usuario && styles.inputError,
+              errors.usuario && styles.inputError, // Cambia el borde a rojo si hay error en estilos
             ]}
             placeholder="ej. nombre@educa360.com"
             placeholderTextColor="#94A3B8"
@@ -129,7 +128,7 @@ export default function Login({ onLogin }) {
             style={[
               styles.input,
               isPasswordFocused && styles.inputFocused,
-              errors.password && styles.inputError,
+              errors.password && styles.inputError, // Cambia el borde a rojo si hay error en estilos
             ]}
             placeholder="••••••••••••"
             placeholderTextColor="#94A3B8"
@@ -149,7 +148,6 @@ export default function Login({ onLogin }) {
             <Text style={styles.errorText}>{errors.password}</Text>
           )}
 
-          {/* Botón de acceso de tu diseño */}
           <CosmicButton
             title="Ingresar a la Plataforma"
             onPress={handleLogin}
@@ -160,7 +158,7 @@ export default function Login({ onLogin }) {
             onPress={() =>
               Alert.alert(
                 'Recuperación de Acceso',
-                'Comunícate con el área de soporte tecnológico de la institución para restablecer tu contraseña.'
+                'Comunícate con el área de soporte tecnológico.'
               )
             }
           >
@@ -171,3 +169,7 @@ export default function Login({ onLogin }) {
     </KeyboardAvoidingView>
   );
 }
+
+Login.propTypes = {
+  onLogin: PropTypes.func.isRequired,
+};

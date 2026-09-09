@@ -5,7 +5,7 @@ export const alumnos = [
     grado: '4to de Secundaria',
     seccion: 'B',
     asistencia: '84%',
-    promedio: 12.8,
+    promedio: 18.8,
     estadoPreventivo: 'seguimiento',
     alertas: [
       { id: 1, tipo: 'academica', curso: 'Matemáticas', motivo: 'Bajo rendimiento en el último examen parcial' },

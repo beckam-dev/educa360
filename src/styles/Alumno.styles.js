@@ -6,14 +6,13 @@ export const styles = StyleSheet.create({
     backgroundColor: '#F8FAFC',
   },
   scrollContent: {
-    paddingBottom: 130, // Margen holgado para el dock inferior flotante
+    paddingBottom: 140, // Espacio amplio para evitar que el contenido final se oculte
   },
 
-  // Cabecera superior morada responsiva con padding superior seguro
+  // Cabecera superior adaptativa
   topBanner: {
     backgroundColor: '#5F348F',
-    paddingTop: Platform.OS === 'ios' ? 12 : 20,
-    paddingBottom: 40,
+    paddingBottom: 38,
     paddingHorizontal: 20,
   },
   greetingRow: {

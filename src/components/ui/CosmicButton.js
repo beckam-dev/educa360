@@ -1,5 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, View, Text } from 'react-native';
+import PropTypes from 'prop-types';
 import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from './CosmicButton.styles';
 
@@ -27,3 +28,7 @@ export default function CosmicButton({
     </TouchableOpacity>
   );
 }
+CosmicButton.propTypes = {
+  title: PropTypes.string.isRequired,
+  onPress: PropTypes.func.isRequired,
+};
