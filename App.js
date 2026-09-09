@@ -1,20 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
-import { 
-  SafeAreaView, 
-  StyleSheet, 
-} from 'react-native';
-import Login from './src/screens/Login';
+import React, { useState } from 'react';
+import { SafeAreaView } from 'react-native';
+
+import Login from './src/pages/Login';
+import AlumnoPage from './src/pages/AlumnoPage';
+import ProfesorPage from './src/pages/ProfesorPage';
+import PadrePage from './src/pages/PadrePage';
 
 export default function App() {
-
   const [page, setPage] = useState('login');
-  const [user, setUser] = useState(null);
+  const [usuario, setUsuario] = useState(null);
 
-  const handleLogin = (userData) => {
-    setUser(userData);
-    setPage(userData.rol);
-  }
+  const handleLogin = (usuarioEncontrado) => {
+    setUsuario(usuarioEncontrado);
+    setPage(usuarioEncontrado.rol);
+  };
 
   switch (page) {
     case 'alumno':
@@ -43,19 +42,9 @@ export default function App() {
 
     default:
       return (
-        <SafeAreaView>
+        <SafeAreaView style={{ flex: 1 }}>
           <Login onLogin={handleLogin} />
         </SafeAreaView>
       );
   }
-
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
