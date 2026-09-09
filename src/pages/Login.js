@@ -6,40 +6,73 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
-  StatusBar
+  StatusBar,
+  Image,
+  Alert,
 } from 'react-native';
 import CosmicButton from '../components/ui/CosmicButton';
 import { styles } from '../styles/Login.styles';
+import { usuarios } from '../data/usuarios';
 
-export default function Login({ onLoginSuccess }) {
-  const [email, setEmail] = useState('');
+export default function Login({ onLogin }) {
+  const [usuario, setUsuario] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
-  const [isEmailFocused, setIsEmailFocused] = useState(false);
+  const [isUserFocused, setIsUserFocused] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
+  // Validación individual por campo
+  const validateField = (field, value) => {
+    let errorMsg = null;
+
+    if (field === 'usuario') {
+      if (!value.trim()) {
+        errorMsg = 'El usuario institucional es obligatorio.';
+      } else if (value.trim().length < 3) {
+        errorMsg = 'El usuario debe contener al menos 3 caracteres.';
+      } else if (/\s/.test(value)) {
+        errorMsg = 'El usuario no debe contener espacios en blanco.';
+      }
+    }
+
+    if (field === 'password') {
+      if (!value) {
+        errorMsg = 'La contraseña institucional es obligatoria.';
+      } else if (value.length < 4) {
+        errorMsg = 'La contraseña debe tener un mínimo de 4 caracteres.';
+      }
+    }
+
+    setErrors((prev) => ({ ...prev, [field]: errorMsg }));
+    return errorMsg;
+  };
+
   const handleLogin = () => {
-    let currentErrors = {};
+    // Validar ambos campos antes de procesar
+    const userError = validateField('usuario', usuario);
+    const passError = validateField('password', password);
 
-    if (!email.trim()) {
-      currentErrors.email = 'El correo institucional es obligatorio.';
-    } else if (!email.includes('@')) {
-      currentErrors.email = 'Formato de correo no válido (@educa360.pe).';
-    }
-
-    if (!password) {
-      currentErrors.password = 'La contraseña es obligatoria.';
-    } else if (password.length < 6) {
-      currentErrors.password = 'Debe tener al menos 6 caracteres.';
-    }
-
-    if (Object.keys(currentErrors).length > 0) {
-      setErrors(currentErrors);
+    if (userError || passError) {
       return;
     }
 
-    setErrors({});
-    onLoginSuccess('Carlos Pérez (Apoderado)');
+    // Comprobación contra src/data/usuarios.js
+    const usuarioEncontrado = usuarios.find(
+      (u) =>
+        u.usuario.toLowerCase() === usuario.trim().toLowerCase() &&
+        u.password === password
+    );
+
+    if (usuarioEncontrado) {
+      setErrors({});
+      onLogin(usuarioEncontrado); // Redirige a la pantalla del rol correspondiente en App.js
+    } else {
+      Alert.alert(
+        'Credenciales Incorrectas',
+        'El usuario o la contraseña ingresados no coinciden con nuestros registros.\n\nUsuarios válidos:\n• juan (Alumno)\n• maria (Profesor)\n• carlos (Padre)\nClave: 1234',
+        [{ text: 'Entendido', style: 'default' }]
+      );
+    }
   };
 
   return (
@@ -47,18 +80,19 @@ export default function Login({ onLoginSuccess }) {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}
     >
-      <StatusBar barStyle="light-content" backgroundColor="#120E1C" />
+      <StatusBar barStyle="dark-content" backgroundColor="#F8FAFC" />
 
-      {/* Halo de luz difuso superior */}
+      {/* Resplandor sutil superior */}
       <View style={styles.ambientGlow} />
 
       <View style={styles.content}>
-        {/* Cabecera */}
+        {/* Cabecera: Logo transparente y subtítulo */}
         <View style={styles.header}>
-          <View style={styles.badgePill}>
-            <Text style={styles.badgePillText}>Edición Escolar 2026</Text>
-          </View>
-          <Text style={styles.title}>Educa360</Text>
+          <Image
+            source={require('../../assets/logo.png')}
+            style={styles.logo}
+            resizeMode="contain"
+          />
           <Text style={styles.subtitle}>
             Acompañamiento escolar y seguimiento preventivo
           </Text>
@@ -66,26 +100,31 @@ export default function Login({ onLoginSuccess }) {
 
         {/* Tarjeta del Formulario */}
         <View style={styles.card}>
-          <Text style={styles.inputLabel}>Correo Institucional</Text>
+          <Text style={styles.inputLabel}>Usuario Institucional</Text>
           <TextInput
             style={[
               styles.input,
-              isEmailFocused && styles.inputFocused,
-              errors.email && styles.inputError,
+              isUserFocused && styles.inputFocused,
+              errors.usuario && styles.inputError,
             ]}
-            placeholder="usuario@educa360.pe"
-            placeholderTextColor="#6D6680"
-            value={email}
+            placeholder="juan, maria o carlos"
+            placeholderTextColor="#94A3B8"
+            value={usuario}
             onChangeText={(text) => {
-              setEmail(text);
-              if (errors.email) setErrors({ ...errors, email: null });
+              setUsuario(text);
+              if (errors.usuario) validateField('usuario', text);
             }}
-            onFocus={() => setIsEmailFocused(true)}
-            onBlur={() => setIsEmailFocused(false)}
+            onFocus={() => setIsUserFocused(true)}
+            onBlur={() => {
+              setIsUserFocused(false);
+              validateField('usuario', usuario);
+            }}
             autoCapitalize="none"
-            keyboardType="email-address"
+            autoCorrect={false}
           />
-          {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
+          {errors.usuario && (
+            <Text style={styles.errorText}>{errors.usuario}</Text>
+          )}
 
           <Text style={[styles.inputLabel, { marginTop: 16 }]}>Contraseña</Text>
           <TextInput
@@ -95,25 +134,38 @@ export default function Login({ onLoginSuccess }) {
               errors.password && styles.inputError,
             ]}
             placeholder="••••••••••••"
-            placeholderTextColor="#6D6680"
+            placeholderTextColor="#94A3B8"
             secureTextEntry
             value={password}
             onChangeText={(text) => {
               setPassword(text);
-              if (errors.password) setErrors({ ...errors, password: null });
+              if (errors.password) validateField('password', text);
             }}
             onFocus={() => setIsPasswordFocused(true)}
-            onBlur={() => setIsPasswordFocused(false)}
+            onBlur={() => {
+              setIsPasswordFocused(false);
+              validateField('password', password);
+            }}
           />
-          {errors.password && <Text style={styles.errorText}>{errors.password}</Text>}
+          {errors.password && (
+            <Text style={styles.errorText}>{errors.password}</Text>
+          )}
 
-          {/* Componente Modular CosmicButton */}
+          {/* Botón de acceso de tu diseño */}
           <CosmicButton
             title="Ingresar a la Plataforma"
             onPress={handleLogin}
           />
 
-          <TouchableOpacity style={styles.helpButton}>
+          <TouchableOpacity
+            style={styles.helpButton}
+            onPress={() =>
+              Alert.alert(
+                'Cuentas Demo',
+                'Roles registrados en el sistema:\n• juan (Alumno)\n• maria (Profesor)\n• carlos (Padre)\nClave para todos: 1234'
+              )
+            }
+          >
             <Text style={styles.helpText}>¿Olvidaste tu contraseña institucional?</Text>
           </TouchableOpacity>
         </View>

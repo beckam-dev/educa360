@@ -16,17 +16,16 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
   },
   innerCore: {
-    backgroundColor: '#1E172E', // Núcleo carbón violeta oscuro
-    borderRadius: 18.2,
-    paddingVertical: 14,
-    paddingHorizontal: 24,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  titleText: {
-    color: '#FFFFFF',
-    fontSize: 14,
-    fontWeight: '700',
-    letterSpacing: 0.4,
-  },
+  backgroundColor: '#5F348F', // Morado medio escolar visible
+  borderRadius: 16,
+  paddingVertical: 14,
+  alignItems: 'center',
+  justifyContent: 'center',
+},
+titleText: {
+  color: '#FFFFFF',
+  fontSize: 15,
+  fontWeight: '700',
+  letterSpacing: 0.3,
+},
 });

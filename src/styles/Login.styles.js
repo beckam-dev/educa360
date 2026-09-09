@@ -1,103 +1,96 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#120E1C', // Fondo noche morado profundo
+    backgroundColor: '#F8FAFC', // Fondo claro, fresco y descansado
     justifyContent: 'center',
   },
   ambientGlow: {
     position: 'absolute',
-    top: -90,
+    top: -150,
     alignSelf: 'center',
-    width: 340,
-    height: 340,
-    borderRadius: 170,
-    backgroundColor: '#6D28D9',
-    opacity: 0.16,
+    width: 360,
+    height: 360,
+    borderRadius: 180,
+    backgroundColor: '#EDE9FE', // Destello lavanda pastel muy sutil
+    opacity: 0.6,
   },
   content: {
     paddingHorizontal: 24,
   },
   header: {
     alignItems: 'center',
-    marginBottom: 32,
+    marginBottom: 20,
   },
-  badgePill: {
-    backgroundColor: '#261F38',
-    borderColor: '#4338CA',
-    borderWidth: 1,
-    paddingHorizontal: 12,
-    paddingVertical: 5,
-    borderRadius: 20,
-    marginBottom: 12,
-  },
-  badgePillText: {
-    color: '#F59E0B',
-    fontSize: 11,
-    fontWeight: '600',
-    letterSpacing: 0.4,
-  },
-  title: {
-    fontSize: 34,
-    fontWeight: '800',
-    color: '#F8FAFC',
-    letterSpacing: -0.5,
+  logo: {
+    width: 360,                  
+    height: 225,
+    alignSelf: 'center',
+    marginBottom: -30,
   },
   subtitle: {
     fontSize: 13,
-    color: '#9E97B3',
-    marginTop: 6,
+    color: '#64748B',
+    marginTop: 4,
     textAlign: 'center',
+    maxWidth: 280,
   },
   card: {
-    backgroundColor: '#1C162B',
-    borderColor: '#2D2445',
+    backgroundColor: '#FFFFFF',
+    borderColor: '#E2E8F0',
     borderWidth: 1,
     borderRadius: 24,
     padding: 24,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.35,
-    shadowRadius: 18,
-    elevation: 8,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#0F172A',
+        shadowOffset: { width: 0, height: 12 },
+        shadowOpacity: 0.08,
+        shadowRadius: 24,
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
   },
   inputLabel: {
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: '600',
-    color: '#C4BFD6',
+    color: '#334155',
     marginBottom: 8,
   },
   input: {
-    backgroundColor: '#140F21',
-    borderWidth: 1,
-    borderColor: '#2D2445',
+    backgroundColor: '#F8FAFC',
+    borderWidth: 1.5,
+    borderColor: '#E2E8F0',
     borderRadius: 14,
     paddingHorizontal: 16,
-    paddingVertical: 13,
-    fontSize: 14,
-    color: '#FFFFFF',
+    paddingVertical: 14,
+    fontSize: 15,
+    color: '#0F172A',
   },
   inputFocused: {
-    borderColor: '#8B5CF6',
-    backgroundColor: '#181229',
+    borderColor: '#6366F1', // Borde índigo/violeta moderno al enfocar
+    backgroundColor: '#FFFFFF',
   },
   inputError: {
-    borderColor: '#F43F5E',
-    backgroundColor: '#23121D',
+    borderColor: '#EF4444',
+    backgroundColor: '#FEF2F2',
   },
   errorText: {
-    color: '#FB7185',
-    fontSize: 11,
+    color: '#DC2626',
+    fontSize: 12,
     marginTop: 5,
     fontWeight: '500',
   },
   helpButton: {
-    marginTop: 18,
+    marginTop: 20,
     alignItems: 'center',
   },
   helpText: {
-    color: '#8A829E',
-    fontSize: 12,
+    color: '#64748B',
+    fontSize: 13,
+    fontWeight: '500',
   },
 });
