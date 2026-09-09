@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
-import { StatusBar, StyleSheet } from 'react-native';
-import {
-  SafeAreaProvider,
-  SafeAreaView,
-} from 'react-native-safe-area-context';
+import { StatusBar, StyleSheet, View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import Login from './src/pages/Login';
 import AlumnoPage from './src/pages/AlumnoPage';
@@ -55,14 +52,15 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <StatusBar
-          barStyle="dark-content"
-          backgroundColor="#F8FAFC"
+          barStyle="light-content"
+          backgroundColor="transparent"
+          translucent={true}
         />
 
         {content}
-      </SafeAreaView>
+      </View>
     </SafeAreaProvider>
   );
 }
@@ -70,6 +68,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F8FAFC',
+    backgroundColor: '#5F348F', 
   },
 });

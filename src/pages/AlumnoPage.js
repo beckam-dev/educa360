@@ -4,6 +4,7 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
+  StatusBar, // <-- 1. Asegúrate de importar StatusBar aquí
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import PropTypes from 'prop-types';
@@ -51,6 +52,9 @@ export default function AlumnoPage({ usuario, setPage }) {
 
   return (
     <View style={styles.container}>
+      {/* 2. Coloca el StatusBar translúcido aquí arriba */}
+      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={true} />
+
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
@@ -176,8 +180,7 @@ export default function AlumnoPage({ usuario, setPage }) {
           </>
         )}
 
-        {/* PESTAÑA 2: CURSOS CON DISEÑO PRO                         */}
-
+        {/* PESTAÑA 2: CURSOS CON DISEÑO PRO */}
         {activeTab === 'cursos' && (
           <View style={styles.section}>
             <View style={styles.sectionHeaderRow}>
@@ -190,7 +193,7 @@ export default function AlumnoPage({ usuario, setPage }) {
             </View>
 
             {cursos.map((item, index) => {
-              const progress = index === 0 ? 75 : 60; // Progreso curricular
+              const progress = index === 0 ? 75 : 60;
               const iconName = item.nombre.toLowerCase().includes('mat') ? 'calculator' : 'flask';
               const iconColor = index === 0 ? '#5F348F' : '#0284C7';
               const iconBg = index === 0 ? '#F3E8FF' : '#E0F2FE';
@@ -225,7 +228,6 @@ export default function AlumnoPage({ usuario, setPage }) {
                     </View>
                   </View>
 
-                  {/* Barra de progreso de avance del curso */}
                   <View style={styles.progressContainer}>
                     <View style={styles.progressLabels}>
                       <Text style={styles.progressTitle}>Avance del Silabo</Text>
@@ -241,8 +243,7 @@ export default function AlumnoPage({ usuario, setPage }) {
           </View>
         )}
 
-        {/* PESTAÑA 3: NOTAS / CALIFICACIONES                        */}
-   
+        {/* PESTAÑA 3: NOTAS / CALIFICACIONES */}
         {activeTab === 'notas' && (
           <View style={styles.section}>
             <View style={styles.sectionHeaderRow}>
@@ -266,11 +267,9 @@ export default function AlumnoPage({ usuario, setPage }) {
           </View>
         )}
 
-        {/* PESTAÑA 4: PERFIL DEL ALUMNO + INFO + LOGOUT             */}
-
+        {/* PESTAÑA 4: PERFIL DEL ALUMNO + INFO + LOGOUT */}
         {activeTab === 'perfil' && (
           <View style={styles.section}>
-            {/* Foto / Avatar del Alumno */}
             <View style={styles.profileCard}>
               <LinearGradient
                 colors={['#8C4ABD', '#F9B201']}
@@ -289,7 +288,6 @@ export default function AlumnoPage({ usuario, setPage }) {
               </View>
             </View>
 
-            {/* Datos Personales e Institucionales */}
             <View style={styles.infoListCard}>
               <View style={styles.infoRow}>
                 <View style={styles.infoLabelGroup}>
@@ -336,7 +334,6 @@ export default function AlumnoPage({ usuario, setPage }) {
               </View>
             </View>
 
-            {/* Botón de Cerrar Sesión (Log out) */}
             <TouchableOpacity
               style={styles.logoutProButton}
               activeOpacity={0.8}
@@ -356,10 +353,9 @@ export default function AlumnoPage({ usuario, setPage }) {
         onSelectTab={setActiveTab}
       />
     </View>
-
-    
   );
 }
+
 AlumnoPage.propTypes = {
   usuario: PropTypes.shape({
     id: PropTypes.number.isRequired,

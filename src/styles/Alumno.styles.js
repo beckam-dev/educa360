@@ -1,4 +1,4 @@
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet, Platform, StatusBar } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
@@ -6,63 +6,49 @@ export const styles = StyleSheet.create({
     backgroundColor: '#F8FAFC',
   },
   scrollContent: {
-    paddingBottom: 140, // Espacio amplio para evitar que el contenido final se oculte
+    paddingBottom: 100,
   },
-
-  // Cabecera superior adaptativa
   topBanner: {
     backgroundColor: '#5F348F',
-    paddingBottom: 38,
+    paddingTop: Platform.OS === 'ios' ? 52 : (StatusBar.currentHeight || 24) + 12,
     paddingHorizontal: 20,
+    paddingBottom: 24,
+
   },
   greetingRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '100%',
   },
   greetingText: {
-    fontSize: 21,
-    fontWeight: '800',
+    fontSize: 22,
+    fontWeight: '700',
     color: '#FFFFFF',
-    letterSpacing: -0.3,
   },
   bannerSubtitle: {
-    fontSize: 12.5,
-    color: '#E9D5FF',
-    marginTop: 3,
+    fontSize: 13,
+    color: '#E2E8F0',
+    marginTop: 2,
   },
   bellIconButton: {
-    width: 42,
-    height: 42,
-    borderRadius: 21,
-    backgroundColor: 'rgba(255, 255, 255, 0.18)',
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
   },
-
-  // Tarjeta principal del estudiante
   mainCard: {
     backgroundColor: '#FFFFFF',
-    marginHorizontal: 16,
-    marginTop: -24,
     borderRadius: 20,
-    padding: 16,
-    borderWidth: 1,
-    borderColor: '#E2E8F0',
-    ...Platform.select({
-      ios: {
-        shadowColor: '#0F172A',
-        shadowOffset: { width: 0, height: 8 },
-        shadowOpacity: 0.08,
-        shadowRadius: 16,
-      },
-      android: {
-        elevation: 4,
-      },
-    }),
+    marginHorizontal: 20,
+    marginTop: -15, // Solapa sutilmente el banner como en tu ejemplo
+    padding: 18,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    elevation: 4,
   },
   profileRow: {
     flexDirection: 'row',
