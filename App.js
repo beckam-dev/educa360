@@ -1,13 +1,54 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { 
+  SafeAreaView, 
+  StyleSheet, 
+} from 'react-native';
+import Login from './src/screens/Login';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+
+  const [page, setPage] = useState('login');
+  const [user, setUser] = useState(null);
+
+  const handleLogin = (userData) => {
+    setUser(userData);
+    setPage(userData.rol);
+  }
+
+  switch (page) {
+    case 'alumno':
+      return (
+        <AlumnoPage
+          usuario={usuario}
+          setPage={setPage}
+        />
+      );
+
+    case 'profesor':
+      return (
+        <ProfesorPage
+          usuario={usuario}
+          setPage={setPage}
+        />
+      );
+
+    case 'padre':
+      return (
+        <PadrePage
+          usuario={usuario}
+          setPage={setPage}
+        />
+      );
+
+    default:
+      return (
+        <SafeAreaView>
+          <Login onLogin={handleLogin} />
+        </SafeAreaView>
+      );
+  }
+
 }
 
 const styles = StyleSheet.create({
